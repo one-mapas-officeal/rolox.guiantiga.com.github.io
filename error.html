@@ -4,9 +4,13 @@
     <meta charset="UTF-8">
     <title>ROLOX | Erro</title>
     <style>
-        body { background: #050505; color: #fff; font-family: sans-serif; padding: 40px; }
-        .container { max-width: 600px; margin: auto; border: 1px solid #444; padding: 30px; }
+        body { background: #050505; color: #fff; font-family: 'Inter', sans-serif; padding: 40px; }
+        .container { max-width: 600px; margin: auto; border: 1px solid #444; padding: 30px; background: #111; }
         .val { color: #ff3333; font-weight: bold; }
+        .btn-container { margin-top: 30px; display: flex; gap: 15px; }
+        button { padding: 10px 20px; border: none; cursor: pointer; font-weight: bold; }
+        .btn-continue { background: #0056b3; color: white; }
+        .btn-back { background: #333; color: white; }
     </style>
 </head>
 <body>
@@ -16,14 +20,28 @@
     <p>Local: <span id="url-display" class="val"></span></p>
     <p>Erro: <span id="error-display" class="val"></span></p>
     <p>Descrição: <span id="desc-display" class="val"></span></p>
+
+    <div class="btn-container">
+        <button class="btn-continue" onclick="continuarMesmoAssim()">Continuar assim mesmo</button>
+        <button class="btn-back" onclick="window.history.back()">Voltar</button>
+    </div>
 </div>
 
 <script>
     const params = new URLSearchParams(window.location.search);
+    const targetUrl = params.get('pageorurl');
     
-    document.getElementById('url-display').innerText = params.get('pageorurl') || 'Desconhecido';
+    document.getElementById('url-display').innerText = targetUrl || 'Desconhecido';
     document.getElementById('error-display').innerText = params.get('error') || 'Erro não especificado';
     document.getElementById('desc-display').innerText = params.get('descrisao') || 'Nenhuma descrição fornecida.';
+
+    function continuarMesmoAssim() {
+        if (targetUrl) {
+            window.location.href = targetUrl;
+        } else {
+            alert("URL de destino não encontrada.");
+        }
+    }
 </script>
 
 </body>
