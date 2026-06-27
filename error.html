@@ -4,20 +4,23 @@
     <meta charset="UTF-8">
     <title>ROLOX | Sistema de Erro</title>
     <style>
-        body { background: #050505; color: #fff; font-family: sans-serif; padding: 40px; }
+        body { background: #050505; color: #fff; font-family: 'Inter', sans-serif; padding: 40px; }
         .container { max-width: 600px; margin: auto; border: 1px solid #444; padding: 30px; background: #111; }
         .val { color: #ff3333; font-weight: bold; }
+        h1 { color: #fff; text-transform: uppercase; border-bottom: 2px solid #ff3333; padding-bottom: 10px; }
+        
         .btn-container { margin-top: 30px; display: flex; gap: 15px; }
-        button { padding: 10px 20px; border: none; cursor: pointer; font-weight: bold; }
+        button { padding: 12px 24px; border: none; cursor: pointer; font-weight: bold; border-radius: 4px; }
         .btn-continue { background: #0056b3; color: white; }
         .btn-back { background: #333; color: white; }
+        button:hover { opacity: 0.8; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1 id="error-title">ERRO DETECTADO</h1>
-    <p>Local: <span id="url-display" class="val"></span></p>
+    <h1>ERRO DETECTADO</h1>
+    <p>URL do Site: <span id="url-display" class="val"></span></p>
     <p>Status do Erro: <span id="error-msg" class="val"></span></p>
 
     <div class="btn-container">
@@ -48,10 +51,15 @@
         '10': 'Erro 204: Offline por 20 minutos'
     };
 
-    document.getElementById('error-msg').innerText = errors[num] || 'Erro desconhecido (' + num + ')';
+    // Exibe a mensagem correspondente ou um erro padrão
+    document.getElementById('error-msg').innerText = errors[num] || 'Erro desconhecido (código ' + num + ')';
 
     function continuar() {
-        if (url !== 'N/A') window.location.href = url;
+        if (url !== 'N/A') {
+            window.location.href = url;
+        } else {
+            alert("URL de destino inválida.");
+        }
     }
 </script>
 
