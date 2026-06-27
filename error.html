@@ -2,9 +2,9 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>ROLOX | Erro</title>
+    <title>ROLOX | Sistema de Erro</title>
     <style>
-        body { background: #050505; color: #fff; font-family: 'Inter', sans-serif; padding: 40px; }
+        body { background: #050505; color: #fff; font-family: sans-serif; padding: 40px; }
         .container { max-width: 600px; margin: auto; border: 1px solid #444; padding: 30px; background: #111; }
         .val { color: #ff3333; font-weight: bold; }
         .btn-container { margin-top: 30px; display: flex; gap: 15px; }
@@ -16,31 +16,42 @@
 <body>
 
 <div class="container">
-    <h1>SISTEMA DE ERROS</h1>
+    <h1 id="error-title">ERRO DETECTADO</h1>
     <p>Local: <span id="url-display" class="val"></span></p>
-    <p>Erro: <span id="error-display" class="val"></span></p>
-    <p>Descrição: <span id="desc-display" class="val"></span></p>
+    <p>Status do Erro: <span id="error-msg" class="val"></span></p>
 
     <div class="btn-container">
-        <button class="btn-continue" onclick="continuarMesmoAssim()">Continuar assim mesmo</button>
+        <button class="btn-continue" onclick="continuar()">Continuar assim mesmo</button>
         <button class="btn-back" onclick="window.history.back()">Voltar</button>
     </div>
 </div>
 
 <script>
     const params = new URLSearchParams(window.location.search);
-    const targetUrl = params.get('pageorurl');
+    const url = params.get('url-display') || 'N/A';
+    const num = params.get('numbre-error');
     
-    document.getElementById('url-display').innerText = targetUrl || 'Desconhecido';
-    document.getElementById('error-display').innerText = params.get('error') || 'Erro não especificado';
-    document.getElementById('desc-display').innerText = params.get('descrisao') || 'Nenhuma descrição fornecida.';
+    document.getElementById('url-display').innerText = url;
 
-    function continuarMesmoAssim() {
-        if (targetUrl) {
-            window.location.href = targetUrl;
-        } else {
-            alert("URL de destino não encontrada.");
-        }
+    // Lógica dos erros (0 a 10)
+    const errors = {
+        '0': 'A próxima página está fora do ar',
+        '1': 'Página com bugs de textura',
+        '2': 'Erro de carregamento',
+        '3': 'A página caiu',
+        '4': 'Essa conta está sendo usada',
+        '5': 'Erro em algumas capturas',
+        '6': 'Erro de jogo',
+        '7': 'Erro de carregamento em jogos',
+        '8': 'Erro de página desconhecida',
+        '9': 'Erro de jogo desconhecido',
+        '10': 'Erro 204: Offline por 20 minutos'
+    };
+
+    document.getElementById('error-msg').innerText = errors[num] || 'Erro desconhecido (' + num + ')';
+
+    function continuar() {
+        if (url !== 'N/A') window.location.href = url;
     }
 </script>
 
